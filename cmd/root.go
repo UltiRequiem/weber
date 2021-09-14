@@ -27,7 +27,7 @@ func Init() {
 			timesToRepeatBucle := math.Round(float64(times / maxChunkValue))
 
 			for i := 0.0; i < timesToRepeatBucle; i++ {
-				for gophers := 0; gophers < 100; gophers++ {
+				for gophers := 0; gophers < maxChunkValue; gophers++ {
 					go internal.Fetch(url, channel)
 				}
 
