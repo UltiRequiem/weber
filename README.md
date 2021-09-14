@@ -6,6 +6,7 @@
 ![CodeQL](https://github.com/UltiRequiem/weber/workflows/CodeQL/badge.svg)
 ![Build](https://github.com/UltiRequiem/weber/workflows/Build/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/UltiRequiem/weber)](https://goreportcard.com/report/github.com/UltiRequiem/yamlfmt)
+[![wakatime](https://wakatime.com/badge/github/UltiRequiem/weber.svg)](https://wakatime.com/badge/github/UltiRequiem/weber)
 
 Asynchronous fetch unlimited times a website.
 
