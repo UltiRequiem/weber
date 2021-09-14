@@ -28,6 +28,8 @@ func TestUrl(url string, logCheck bool) bool {
 		log.Println(fmt.Sprintf("Status Code: %d", resp.StatusCode))
 	}
 
+	resp.Body.Close()
+
 	return true
 
 }
