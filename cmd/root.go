@@ -26,11 +26,19 @@ func Init() {
 		if times > maxChunkValue {
 			timesToRepeatBucle := math.Round(float64(times / maxChunkValue))
 
-			for i := 0.0; i < timesToRepeatBucle; i++ {
-				for gophers := 0; gophers < maxChunkValue; gophers++ {
-					go internal.Fetch(url, channel)
-				}
+			channelOfChannels := make(chan string)
+			for i := 1.0; i < timesToRepeatBucle+1; i++ {
 
+				go func() {
+					for gophers := 0; gophers < maxChunkValue; gophers++ {
+						go internal.Fetch(url, channel)
+					}
+
+					channelOfChannels <- fmt.Sprintf("Chunk %d sended!", int(i))
+				}()
+
+				log.Println(<-channelOfChannels)
+				time.Sleep(time.Second / time.Duration(timeToSleep))
 			}
 
 		} else {
@@ -40,7 +48,6 @@ func Init() {
 		}
 
 		for i := 1; i < times+1; i++ {
-			time.Sleep(time.Second / time.Duration(timeToSleep))
 
 			if logFetch && <-channel {
 				log.Println(fmt.Sprintf("Fetch %d to %s done successfully!", i, url))

@@ -53,7 +53,7 @@ You told `Weber` to make 1000 fetches, but is like that the server is going to
 ban you if you make all the fetches at the same time.
 So `Weber` divides the 1000 requests in 10 parts of 100 fetches.
 
-You can modify the default value of 100 by using [`--maxChunkValue`]()
+You can modify the default value of 100 by using [`--maxChunkValue`](#-m----maxchunkvalue)
 
 ### `-m` / `--maxChunkValue`
 
