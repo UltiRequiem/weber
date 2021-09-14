@@ -8,38 +8,49 @@ import (
 )
 
 func fetch(url string, c chan bool) {
-	_, err := http.Get(url)
+	resp, _ := http.Get(url)
+	resp.Body.Close()
+	c <- true
+}
+
+func testUrl(url string, logCheck bool) bool {
+	resp, err := http.Get(url)
 
 	if err != nil {
-		switch err.(type) {
-		default:
-			log.Fatal(err)
-		}
+		log.Fatal("Error while fetching, check the url.")
 	}
 
-	c <- true
+	if logCheck {
+		log.Println(fmt.Sprintf("Status Code: %d", resp.StatusCode))
+	}
+
+	return true
+
 }
 
 func Init() {
 	channel := make(chan bool)
 
-	url, logFetch, times := getParams()
+	url, logFetch, times, timeToSleep := getParams()
 
 	if logFetch {
 		fmt.Println(fmt.Sprintf(`URL to Fetch: "%s", Times to fetch: %d, Log: %t.`, url, times, logFetch))
 	}
 
-	// Send Gophers to fetch the URL
-	for i := 0; i < times; i++ {
-		go fetch(url, channel)
-	}
+	if testUrl(url, logFetch) {
 
-	// Call All the Gophers
-	for i := 0; i < times; i++ {
-		time.Sleep(time.Second / 2)
+		// Send Gophers to fetch the URL
+		for i := 0; i < times; i++ {
+			go fetch(url, channel)
+		}
 
-		if logFetch && <-channel {
-			log.Println(fmt.Sprintf("%s fetched successfully!", url))
+		// Call All the Gophers
+		for i := 0; i < times; i++ {
+			time.Sleep(time.Second / time.Duration(timeToSleep))
+
+			if logFetch && <-channel {
+				log.Println(fmt.Sprintf("%s fetched successfully!", url))
+			}
 		}
 	}
 
