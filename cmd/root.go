@@ -11,7 +11,7 @@ import (
 func Init() {
 	channel := make(chan bool)
 
-	url, logFetch, times, timeToSleep := getParams()
+	url, logFetch, times, timeToSleep, maxChunkValue := getParams()
 
 	if url == "" {
 		log.Fatal("You have to pass an url!")
@@ -23,8 +23,8 @@ func Init() {
 
 	if internal.TestUrl(url, logFetch) {
 
-		if times > 100 {
-			timesToRepeatBucle := math.Round(float64(times / 100))
+		if times > maxChunkValue {
+			timesToRepeatBucle := math.Round(float64(times / maxChunkValue))
 
 			for i := 0.0; i < timesToRepeatBucle; i++ {
 				for gophers := 0; gophers < 100; gophers++ {
