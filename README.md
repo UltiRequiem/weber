@@ -47,13 +47,13 @@ weber -u http://localhost:3000 -t 99999 -l
 If you want to do too large a number of fetchs,
 by default the requests will be split into small chunks of 100.
 
-Example: `weber -u http: // localhost: 3000 -t 1000`
+Example: `weber -u http://localhost:3000 -t 1000`
 
 You told `Weber` to make 1000 fetches, but is like that the server is going to
 ban you if you make all the fetches at the same time.
 So `Weber` divides the 1000 requests in 10 parts of 100 fetches.
 
-You can modify the default value of 100 by using [`--maxChunkValue`](#-m----maxchunkvalue)
+You can modify the default value of 100 by using [`--maxChunkValue`](#-m----maxchunkvalue).
 
 ### `-m` / `--maxChunkValue`
 
