@@ -22,6 +22,32 @@ You can also use the binaries from
 
 ## Usage
 
+Basic Usage:
+
+```bash
+weber -u http://localhost:3000
+```
+
+This will silently fetch _1_ time `http://localhost:3000`. You can use `--url` instead of `-u`.
+
+If you want to log what is happening:
+
+```bash
+weber -u http://localhost:3000 -l
+```
+
+You can use the `-l` or `--logFetch` flag.
+
+To fetch more than one time:
+
+```bash
+weber -u http://localhost:3000 -t 99999 -l
+```
+
+Is also valid to use `--times` instead of `-t`.
+
+TODO
+
 #### License
 
 This project is licensed under the [MIT license](./LICENSE.md).
