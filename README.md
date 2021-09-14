@@ -36,7 +36,7 @@ If you want to log what is happening:
 weber -u http://localhost:3000 -l
 ```
 
-You can use the `-l` or `--logFetch` flag.
+You can use the `-l` or `--log` flag.
 
 To fetch more than one time:
 
@@ -46,7 +46,14 @@ weber -u http://localhost:3000 -t 99999 -l
 
 Is also valid to use `--times` instead of `-t`.
 
-TODO
+If you want to do too large a number of fetchs,
+by default the requests will be split into small chunks of 100.
+
+Eg: `weber -u http: // localhost: 3000 -t 1000`
+
+You told `Weber` to make 1000 fetches, but is like that the server is gonna ban you
+if you make all the fetches at the same time. So `Weber` divides the 1000 requests in
+10 parts of 100 fetches.
 
 #### License
 
