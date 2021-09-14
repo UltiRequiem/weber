@@ -55,6 +55,14 @@ You told `Weber` to make 1000 fetches, but is like that the server is gonna ban 
 if you make all the fetches at the same time. So `Weber` divides the 1000 requests in
 10 parts of 100 fetches.
 
+You can modify the max value of the chunks (default: 100) by:
+
+```bash
+weber -u http://localhost:3000 -t 99999 -m 200 -l
+```
+
+Instead of `-m` you can also use `maxChunkValue`.
+
 #### License
 
 This project is licensed under the [MIT license](./LICENSE.md).
