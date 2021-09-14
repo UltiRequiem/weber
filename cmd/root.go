@@ -3,12 +3,16 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"math"
 	"net/http"
 	"time"
 )
 
 func fetch(url string, c chan bool) {
-	resp, _ := http.Get(url)
+	resp, err := http.Get(url)
+	if err != nil {
+		return
+	}
 	resp.Body.Close()
 	c <- true
 }
@@ -33,15 +37,31 @@ func Init() {
 
 	url, logFetch, times, timeToSleep := getParams()
 
+	if url == "" {
+		log.Fatal("You have to pass an url!")
+	}
+
 	if logFetch {
 		fmt.Println(fmt.Sprintf(`URL to Fetch: "%s", Times to fetch: %d, Log: %t.`, url, times, logFetch))
 	}
 
 	if testUrl(url, logFetch) {
 
-		// Send Gophers to fetch the URL
-		for i := 0; i < times; i++ {
-			go fetch(url, channel)
+		if times > 100 {
+			timesToRepeatBucle := math.Round(float64(times / 100))
+
+			for i := 0.0; i < timesToRepeatBucle; i++ {
+				for gophers := 0; gophers < 100; gophers++ {
+					go fetch(url, channel)
+				}
+
+			}
+
+		} else {
+			// Send Gophers to fetch the URL
+			for i := 0; i < times; i++ {
+				go fetch(url, channel)
+			}
 		}
 
 		// Call All the Gophers
