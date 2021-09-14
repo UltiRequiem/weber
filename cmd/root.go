@@ -11,26 +11,27 @@ import (
 func Init() {
 	channel := make(chan bool)
 
-	url, logFetch, times, timeToSleep, maxChunkValue := getParams()
+	url, logFetch, times, timeToSleep, maxChunkCapacity := getParams()
 
 	if url == "" {
 		log.Fatal("You have to pass an url!")
 	}
 
 	if logFetch {
-		fmt.Println(fmt.Sprintf(`URL to Fetch: "%s", Times to fetch: %d, Log: %t.`, url, times, logFetch))
+		log.Println(fmt.Sprintf(`URL to Fetch: "%s", Log: %t, Times: %d, Max Chunk Capacity:%d.`, url, logFetch, times, maxChunkCapacity))
+		defer log.Println("Process Finished.")
 	}
 
 	if internal.TestUrl(url, logFetch) {
 
-		if times > maxChunkValue {
-			timesToRepeatBucle := math.Round(float64(times / maxChunkValue))
+		if times > maxChunkCapacity {
+			timesToRepeatBucle := math.Round(float64(times / maxChunkCapacity))
 
 			channelOfChannels := make(chan string)
 			for i := 1.0; i < timesToRepeatBucle+1; i++ {
 
 				go func() {
-					for gophers := 0; gophers < maxChunkValue; gophers++ {
+					for gophers := 0; gophers < maxChunkCapacity; gophers++ {
 						go internal.Fetch(url, channel)
 					}
 
@@ -53,9 +54,9 @@ func Init() {
 				log.Println(fmt.Sprintf("Fetch %d to %s done successfully!", i, url))
 			}
 		}
+
+		return
 	}
 
-	if logFetch {
-		log.Println("Finished")
-	}
+	log.Fatal(fmt.Sprintf("%s can’t be reached.", url))
 }
