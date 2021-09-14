@@ -39,11 +39,11 @@ func Init() {
 			}
 		}
 
-		for i := 0; i < times; i++ {
+		for i := 1; i < times+1; i++ {
 			time.Sleep(time.Second / time.Duration(timeToSleep))
 
 			if logFetch && <-channel {
-				log.Println(fmt.Sprintf("%s fetched successfully!", url))
+				log.Println(fmt.Sprintf("Fetch %d to %s done successfully!", i, url))
 			}
 		}
 	}
