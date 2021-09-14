@@ -14,7 +14,7 @@ func Init() {
 	url, logFetch, times, timeToSleep, maxChunkCapacity := getParams()
 
 	if url == "" {
-		log.Fatal("You have to pass an url!")
+		log.Fatal("You have to pass an URL!")
 	}
 
 	if logFetch {
