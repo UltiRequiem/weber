@@ -22,7 +22,7 @@ You can also use the binaries from
 
 ## Usage
 
-Basic Usage:
+### Basic Usage:
 
 ```bash
 weber -u http://localhost:3000
@@ -30,38 +30,38 @@ weber -u http://localhost:3000
 
 This will silently fetch _1_ time `http://localhost:3000`. You can use `--url` instead of `-u`.
 
-If you want to log what is happening:
+### `-l` / `--log`
+
+This Option will Log all what is happening, and the parameters that you passed.
 
 ```bash
 weber -u http://localhost:3000 -l
 ```
 
-You can use the `-l` or `--log` flag.
-
-To fetch more than one time:
+### `-t` / `--times`
 
 ```bash
 weber -u http://localhost:3000 -t 99999 -l
 ```
-
-Is also valid to use `--times` instead of `-t`.
 
 If you want to do too large a number of fetchs,
 by default the requests will be split into small chunks of 100.
 
 Eg: `weber -u http: // localhost: 3000 -t 1000`
 
-You told `Weber` to make 1000 fetches, but is like that the server is gonna ban you
-if you make all the fetches at the same time. So `Weber` divides the 1000 requests in
-10 parts of 100 fetches.
+You told `Weber` to make 1000 fetches, but is like that the server is going to
+ban you if you make all the fetches at the same time.
+So `Weber` divides the 1000 requests in 10 parts of 100 fetches.
 
-You can modify the max value of the chunks (default: 100) by:
+You can modify the default value of 100 by using [`--maxChunkValue`]()
+
+### `-m` / `--maxChunkValue`
+
+You can modify the max value of the chunks by:
 
 ```bash
 weber -u http://localhost:3000 -t 99999 -m 200 -l
 ```
-
-Instead of `-m` you can also use `maxChunkValue`.
 
 #### License
 
