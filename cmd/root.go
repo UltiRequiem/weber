@@ -25,17 +25,13 @@ func Init() {
 	if internal.TestUrl(url, logFetch) {
 
 		if times > maxChunkCapacity {
-			timesToRepeatBucle := math.Round(float64(times / maxChunkCapacity))
+			timesToRepeatBucle := int(math.Round(float64(times / maxChunkCapacity)))
 
 			channelOfChannels := make(chan string)
-			for i := 1.0; i < timesToRepeatBucle+1; i++ {
-
+			for i := 0; i < timesToRepeatBucle; i++ {
 				go func() {
-					for gophers := 0; gophers < maxChunkCapacity; gophers++ {
-						go internal.Fetch(url, channel)
-					}
-
-					channelOfChannels <- fmt.Sprintf("Chunk %d sended!", int(i))
+					internal.CicleFetch(maxChunkCapacity, url, channel)
+					channelOfChannels <- fmt.Sprintf("Chunk %d sended!", i+1)
 				}()
 
 				log.Println(<-channelOfChannels)
@@ -43,17 +39,10 @@ func Init() {
 			}
 
 		} else {
-			for gophers := 0; gophers < times; gophers++ {
-				go internal.Fetch(url, channel)
-			}
+			internal.CicleFetch(times, url, channel)
 		}
 
-		for i := 1; i < times+1; i++ {
-
-			if logFetch && <-channel {
-				log.Println(fmt.Sprintf("Fetch %d to %s done successfully!", i, url))
-			}
-		}
+		internal.CallAllGoroutines(times, channel, logFetch, url)
 
 		return
 	}

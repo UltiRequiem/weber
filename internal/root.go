@@ -17,6 +17,20 @@ func Fetch(url string, c chan bool) {
 	c <- true
 }
 
+func CallAllGoroutines(times int, channel chan bool, logFetch bool, url string) {
+	for i := 0; i < times; i++ {
+		if logFetch && <-channel {
+			log.Println(fmt.Sprintf("Fetch %d to %s done successfully!", i+1, url))
+		}
+	}
+}
+
+func CicleFetch(times int, url string, channel chan bool) {
+	for gophers := 0; gophers < times; gophers++ {
+		go Fetch(url, channel)
+	}
+}
+
 func TestUrl(url string, logCheck bool) bool {
 	resp, err := http.Get(url)
 
