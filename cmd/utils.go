@@ -10,5 +10,5 @@ func validateURL(url string, logFetch bool) {
 		log.Fatal("You have to pass an URL!")
 	}
 
-	internal.TestUrl(url, logFetch)
+	internal.CheckURL(url, logFetch)
 }

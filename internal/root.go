@@ -31,7 +31,7 @@ func CicleFetch(times int, url string, channel chan bool) {
 	}
 }
 
-func TestUrl(url string, logCheck bool) {
+func CheckURL(url string, logCheck bool) {
 	resp, err := http.Get(url)
 
 	if err != nil {
