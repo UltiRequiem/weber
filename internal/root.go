@@ -25,7 +25,7 @@ func CallAllGoroutines(times int, channel chan bool, logFetch bool, url string) 
 	}
 }
 
-func CicleFetch(times int, url string, channel chan bool) {
+func CyclicFetch(times int, url string, channel chan bool) {
 	for gophers := 0; gophers < times; gophers++ {
 		go Fetch(url, channel)
 	}

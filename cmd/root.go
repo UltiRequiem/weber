@@ -22,12 +22,12 @@ func Init() {
 	channel := make(chan bool)
 
 	if times > maxChunkCapacity {
-		timesToRepeatBucle := int(math.Round(float64(times / maxChunkCapacity)))
+		timesToRepeatBuckle := int(math.Round(float64(times / maxChunkCapacity)))
 
 		c := make(chan string)
-		for i := 0; i < timesToRepeatBucle; i++ {
+		for i := 0; i < timesToRepeatBuckle; i++ {
 			go func() {
-				internal.CicleFetch(maxChunkCapacity, url, channel)
+				internal.CyclicFetch(maxChunkCapacity, url, channel)
 				c <- fmt.Sprintf("Chunk %d sended!", i+1)
 			}()
 
@@ -36,7 +36,7 @@ func Init() {
 		}
 
 	} else {
-		internal.CicleFetch(times, url, channel)
+		internal.CyclicFetch(times, url, channel)
 	}
 
 	internal.CallAllGoroutines(times, channel, logFetch, url)
